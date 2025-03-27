@@ -1,0 +1,25 @@
+import flet as ft
+
+def main(page: ft.Page):
+    page.title = "Заметки с счетчиком"
+
+    notes = ft.Column()
+    input_field = ft.TextField(label="Введите заметку")
+    counter = ft.Text("Количество заметок: 0")
+
+    def add_note(e):
+        if input_field.value:
+            notes.controls.append(ft.Text(input_field.value))
+            input_field.value = ""
+            update_counter()
+            page.update()
+
+    def update_counter():
+        count = len(notes.controls)
+        counter.value = f"Количество заметок: {count}"
+
+    button = ft.ElevatedButton("Добавить заметку", on_click=add_note)
+
+    page.add(input_field, button, counter, notes)
+
+ft.app(target=main)
